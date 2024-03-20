@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1st JQM</title>
+
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="javascripts/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  </head>
+  <body>
+
+    
+    <!-- home page /w list--------------------------->
+    <div id="home" class="tab-content" data-role="page">
+      <div data-role="navbar" class="navbar" data-theme="a">
+        <ul>
+          <li><a href="#home" class="tab-link" data-target="#home">Home</a></li>
+          <li>
+            <a href="#songList" class="tab-link" data-target="#songList"
+              >Add Song</a
+            >
+          </li>
+          <!-- <li><a href="#" class="tab-link" data-target="#artist">Artist</a></li>
+      <li><a href="#" class="tab-link" data-target="#rate">Rate</a></li> -->
+        </ul>
+      </div>
+
+      <h1>Song list</h1>
+      <ul id="view"></ul>
+    </div>
+    <!--  end of home page /w list           ------------------------->
+
+    <div id="songList" class="tab-content" data-role="page">
+      <div data-role="navbar" class="navbar" data-theme="a">
+        <ul>
+          <li><a href="#home" class="tab-link" data-target="#home">Home</a></li>
+          <li>
+            <a href="#songList" class="tab-link" data-target="#songList"
+              >Add Song</a
+            >
+          </li>
+          <!-- <li><a href="#" class="tab-link" data-target="#artist">Artist</a></li>
+      <li><a href="#" class="tab-link" data-target="#rate">Rate</a></li> -->
+        </ul>
+      </div>
+
+      <!-- song name page -->
+      <div id="song" class="tab-content">
+        <h2>Favorite Song</h2>
+        <input
+          type="text"
+          id="songInput"
+          placeholder="Enter your favorite song"
+        />
+        <!-- <button id="songSubmit">Submit</button> -->
+        <div class="output">
+          Your favorite song: <span id="songOutput"></span>
+        </div>
+      </div>
+      <!-- artist page -->
+      <div id="artist" class="tab-content">
+        <h2>Artist</h2>
+        <input
+          type="text"
+          id="artistInput"
+          placeholder="Enter the artist of the song"
+        />
+        <!-- <button id="artistSubmit">Submit</button> -->
+        <div class="output">
+          Artist of the song: <span id="artistOutput"></span>
+        </div>
+      </div>
+      <!-- rate page -->
+      <div id="rate" class="tab-content">
+        <h2>Rate</h2>
+        <input
+          type="number"
+          id="rateInput"
+          min="1"
+          max="5"
+          placeholder="Rate from 1 to 5"
+        />
+        <!-- <button id="rateSubmit">Submit</button> -->
+        <div class="output">Your rating: <span id="rateOutput"></span></div>
+      </div>
+
+      <br />
+      <!-- <button id="listSubmit" onclick="buttonAdd">submit</button> -->
+      <!-- <button id="listSubmit" onclick="pushData()">submit</button> -->
+      <input type="button" value="Add Song" id="buttonAdd" data-inline="true" />
+      <!-- <input  type="button" value="Clear Data" id="buttonClear" data-inline="true" /> -->
+    </div>
+
+    <div id="details" class="tab-content" data-role="page">
+      <p>Here are the details</p>
+      <p id="songTitle"></p>
+      <p id="songArtist"></p>
+      <p id="songRate"></p>
+    </div>
+  </body>
+</html>
