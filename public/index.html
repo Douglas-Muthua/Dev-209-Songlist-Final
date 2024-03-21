@@ -13,6 +13,7 @@
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="javascripts/app.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/themes/my-custom-theme.css" />
   </head>
   <body>
 
@@ -98,7 +99,27 @@
       <!-- <input  type="button" value="Clear Data" id="buttonClear" data-inline="true" /> -->
     </div>
 
+
+ <!--  Details page        ----------------------- ----------------------- ------------------------->
     <div id="details" class="tab-content" data-role="page">
+      <div data-role="navbar" class="navbar" data-theme="a">
+        <ul>
+          <li><a href="#home" class="tab-link" data-target="#home">Home</a></li>
+          <li>
+            <a href="#songList" class="tab-link" data-target="#songList"
+              >Add Song</a
+            >
+          </li>
+          <!-- <li><a href="#" class="tab-link" data-target="#artist">Artist</a></li>
+      <li><a href="#" class="tab-link" data-target="#rate">Rate</a></li> -->
+        </ul>
+      </div>
+
+
+
+
+
+
       <p>Here are the details</p>
       <p id="songTitle"></p>
       <p id="songArtist"></p>

@@ -16,8 +16,6 @@ let songlist = [];
 //   newTd.appendChild(node);
 //   view.appendChild(newTd);
 
-
-
 //   document.location.href = "index.html#home";
 // }
 
@@ -46,25 +44,31 @@ let SongObject = function (sTitle, sArtist, sRating, sGenre) {
   this.Artist = sArtist;
   this.Rating = sRating;
   this.sGenre = sGenre;
-  this.ID = songlist.length + 1;
-  //this.ID = Math.random().toString(16).slice(5)
+  //this.ID = songlist.length + 1;
+  this.ID = Math.random().toString(16).slice(5);
 };
 
-console.log(SongObject.Title);
-
 document.addEventListener("DOMContentLoaded", function () {
-  createList();
+   createList();
 
   document.getElementById("buttonAdd").addEventListener("click", function () {
-    songlist.push(
-      new SongObject(
-        document.getElementById("songInput").value,
-        // document.getElementById("year").value,
-        // selectedGenre,
-        document.getElementById("artistInput").value,
-        document.getElementById("rateInput").value
-      )
-    );
+    let newSong = new SongObject(
+      document.getElementById("songInput").value,
+      // document.getElementById("year").value,
+      // selectedGenre,
+      document.getElementById("artistInput").value,
+      document.getElementById("rateInput").value
+    )
+    $.post("/AddSong", newSong,function (data, status) {});
+    // songlist.push(
+    //   new SongObject(
+    //     document.getElementById("songInput").value,
+    //     // document.getElementById("year").value,
+    //     // selectedGenre,
+    //     document.getElementById("artistInput").value,
+    //     document.getElementById("rateInput").value
+    //   )
+    // );
     // document.getElementById("URL").value));
     document.location.href = "index.html#home";
     // also add the URL value
@@ -72,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $(document).on("pagebeforeshow", "#home", function (event) {
     // have to use jQuery
-    createList();
+    //createList();
   });
 
   // need one for our details page to fill in the info based on the passed in ID
@@ -82,31 +86,44 @@ document.addEventListener("DOMContentLoaded", function () {
     // next step to avoid bug in jQuery Mobile,  force the movie array to be current
     songlist = JSON.parse(localStorage.getItem("songlist"));
 
-    console.log(songlist[localID - 1]);
+    let poninter = getObjectPointer(localID);
+
+    ///console.log(songlist[poninter]);
 
     document.getElementById("songTitle").innerHTML =
-      "The Song: " + songlist[localID - 1].Title;
+      "The Song: " + songlist[poninter].Title;
     document.getElementById("songArtist").innerHTML =
-      "By: " + songlist[localID - 1].Artist;
+      "By: " + songlist[poninter].Artist;
     document.getElementById("songRate").innerHTML =
-      "You Rating Of: " + songlist[localID - 1].Rating;
+      "You Rating Of: " + songlist[poninter].Rating;
     // document.getElementById("oneWoman").innerHTML = "Leading Woman: " + songlist[localID - 1].Woman;
     // document.getElementById("oneMan").innerHTML = "Leading Man: " + songlist[localID - 1].Man;
     // document.getElementById("oneURL").innerHTML = songlist[localID - 1].URL;
   });
 });
 
+function getObjectPointer(whichID) {
+  for (i = 0; i < songlist.length; i++) {
+    if (songlist[i].ID === whichID) {
+      return i;
+    }
+  }
+}
+
 function createList() {
   // clear prior data
   let myUL = document.getElementById("view");
   myUL.innerHTML = "";
 
-  $.get("/getAllSongs", function(data, status){ // AJAX get
+  $.get("/getAllSongs", function (data, status) {
+    // AJAX get
+    
     songlist = data; // copy returned server json data into local array
     // now INSIDE this “call back” anonymous function,
     // update the web page with this new data
-    });
-
+  
+console.log(songlist);
+console.log(data);
   songlist.forEach(function (oneMovie) {
     // use handy array forEach method
     var myLi = document.createElement("li");
@@ -115,7 +132,7 @@ function createList() {
     // use the html5 "data-parm" to encode the ID of this particular data object
     // that we are building an li from
     myLi.setAttribute("data-parm", oneMovie.ID);
-    myLi.innerHTML =`${oneMovie.ID}) Song: ${oneMovie.Title} By: ${oneMovie.Artist} Rating: ${oneMovie.Rating}`
+    myLi.innerHTML = `${oneMovie.ID}) Song: ${oneMovie.Title} By: ${oneMovie.Artist} Rating: ${oneMovie.Rating}`;
     // myLi.innerHTML =
     //   oneMovie.ID +
     //   ":  " +
@@ -135,7 +152,7 @@ function createList() {
   newMoviewArray.forEach(function (element) {
     element.addEventListener("click", function () {
       // get that data-parm we added for THIS particular li as we loop thru them
-      console.log("temp");
+
       var parm = this.getAttribute("data-parm"); // passing in the record.Id
       // get our hidden <p> and save THIS ID value in the localStorage "dictionairy"
       localStorage.setItem("parm", parm);
@@ -143,12 +160,14 @@ function createList() {
       // but also, to get around a "bug" in jQuery Mobile, take a snapshot of the
       // current movie array and save it to localStorage as well.
       let stringsonglist = JSON.stringify(songlist); // convert array to "string"
+      
       localStorage.setItem("songlist", stringsonglist);
 
       // now jump to our page that will use that one item
       document.location.href = "index.html#details";
     });
   });
+});
 }
 
-console.log(songlist);
+// console.log(songlist[poninter].Title);
